@@ -1,10 +1,11 @@
-package com.example.silvertiger.model;
+package com.example.silvertiger.dto;
 
 import lombok.Data;
 
 // Account 요청 객체
 @Data
-public class AccountRequest {
+public class JoinDto {
+
     private String id;
     private String passwd;
     private String name;
