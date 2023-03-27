@@ -1,13 +1,11 @@
 package com.example.silvertiger.controller;
 
-import com.example.silvertiger.dto.LoginDto;
 import com.example.silvertiger.dto.JoinDto;
+import com.example.silvertiger.dto.LoginDto;
 import com.example.silvertiger.service.AccountService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -33,6 +31,12 @@ public class AccountController {
     @PostMapping("/login")
     public String login(@RequestBody LoginDto loginDto){
         return accountService.login(loginDto);
+    }
+
+    @GetMapping("/user")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    public String getMyUserInfo() {
+        return "test";
     }
 }
 
