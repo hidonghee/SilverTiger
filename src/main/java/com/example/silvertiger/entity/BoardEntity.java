@@ -1,6 +1,5 @@
 package com.example.silvertiger.entity;
 
-
 import com.example.silvertiger.dto.BoardDto;
 import lombok.Getter;
 import lombok.Setter;
