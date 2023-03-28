@@ -22,6 +22,6 @@ public class BookMark implements Serializable {
     @Column(unique = true, nullable = false,length = 50, name = "contentId")
     private String contentId;
 
-    @OneToMany(mappedBy = "bookMark")
-    public List<AccountBookMark> accountBookMarks = new ArrayList<>();
+    @OneToMany(mappedBy = "bookMarkId")
+    public List<AccountBookMark> accountBookMark = new ArrayList<>();
 }

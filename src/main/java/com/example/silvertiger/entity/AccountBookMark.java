@@ -17,12 +17,10 @@ import java.io.Serializable;
 @Entity
 public class AccountBookMark implements Serializable {
     @Id
-    @ManyToOne
     @JoinColumn(name="account_id")
-    private Account account;
+    private String accountId;
 
     @Id
-    @ManyToOne
     @JoinColumn(name="bookmark_id")
-    private BookMark bookMark;
+    private String bookMarkId;
 }

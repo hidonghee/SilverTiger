@@ -9,6 +9,6 @@ import java.io.Serializable;
 @EqualsAndHashCode
 @Data
 public class AccountBookMarkPk implements Serializable {
-    private Account account;
-    private BookMark bookMark;
+    private String accountId;
+    private String bookMarkId;
 }

@@ -35,18 +35,10 @@ public class BookMarkService {
 
 //    private final AuthenticationPrincipal authenticationPrincipal
     @Transactional
-    public String mark(BookMarkDto bookMarkDTo , HttpServletRequest httpServletRequest){
+    public AccountBookMark mark(BookMarkDto bookMarkDTo , HttpServletRequest httpServletRequest){
         String id = getUser(httpServletRequest);
-        Account account = accountRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("가입되지 않은 ID 입니다.")
-        );
-        AccountBookMark accountBookMark =new AccountBookMark();
-        accountBookMark.setAccount(account);
-        BookMark bookMark = new BookMark();
-        bookMark.setContentId(bookMarkDTo.getContext_id());
-
-        accountBookMarkRepository.save(accountBookMark);
-        return accountBookMark.getAccount().getDate();
+        bookMarkRepository.save(BookMark.builder().contentId(bookMarkDTo.getContext_id()).build());
+        return accountBookMarkRepository.save(AccountBookMark.builder().accountId(id).bookMarkId(bookMarkDTo.getContext_id()).build());
     }
 
     private String getUser(HttpServletRequest httpServletRequest) {

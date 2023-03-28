@@ -46,8 +46,8 @@ public class Account implements UserDetails, Serializable {
     @Column(nullable = false, length = 45)
     private String date;
 
-    @OneToMany(mappedBy = "account")
-    public List<AccountBookMark> bookMarks = new ArrayList<>();
+    @OneToMany(mappedBy = "accountId")
+    public List<AccountBookMark> bookMark = new ArrayList<>();
 
 
     @ElementCollection(fetch = FetchType.EAGER) //roles 컬렉션
