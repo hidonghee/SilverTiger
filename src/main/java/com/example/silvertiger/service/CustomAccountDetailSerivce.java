@@ -13,6 +13,6 @@ public class CustomAccountDetailSerivce implements UserDetailsService {
     private final AccountRepository accountRepository;
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return accountRepository.findById(username).orElseThrow(() -> new UsernameNotFoundException("사용자 x "));
+        return accountRepository.findById(username).orElseThrow(() -> new UsernameNotFoundException("사용자가 없습니다. "));
     }
 }

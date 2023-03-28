@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -16,6 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @RequiredArgsConstructor
 @EnableWebSecurity  //Spring Security 설정 활성화
+@EnableGlobalMethodSecurity(prePostEnabled = true,securedEnabled = true)
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtTokenProvider jwtTokenProvider;
@@ -42,7 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 //URL 관리
                 .authorizeRequests()
-                .antMatchers("/account/join","/account/login").permitAll()
+                .antMatchers("/account/join","/account/login","/account/test").permitAll()
                 .anyRequest().authenticated()
                 .and();
                 // JwtAuthenticationFilter를 먼저 적용
