@@ -31,9 +31,6 @@ public class BoardEntity extends BaseEntity {
     @Column
     private int boardHits;
 
-    @Column
-    private int fileAttached; // 1 or 0
-
     //엔티티 객체를 옮겨 담기 위해 객체를 생성
     public static BoardEntity toSaveEntity(BoardDto boardDto){
         BoardEntity boardEntity = new BoardEntity();
