@@ -5,6 +5,7 @@ import com.example.silvertiger.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,18 +20,21 @@ public class BoardController {
 
     private final BoardService boardService;
     @PostMapping("/save")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
     public ResponseEntity<BoardDto> save(@RequestBody BoardDto boardDto){
         BoardDto saveBoardDto = boardService.save(boardDto);
         return ResponseEntity.ok(saveBoardDto);
     }
 
     @PostMapping("/update/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
     public ResponseEntity<BoardDto> update(@RequestBody BoardDto boardDto) {
         BoardDto updatedBoardDto = boardService.update(boardDto);
         return ResponseEntity.ok(updatedBoardDto);
     }
 
     @GetMapping("/")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
     public ResponseEntity<List<BoardDto>> findAll() {
         List<BoardDto> boardDtoList = boardService.findAll();
         return new ResponseEntity<>(boardDtoList, HttpStatus.OK);
@@ -38,6 +42,7 @@ public class BoardController {
 
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
     public ResponseEntity<BoardDto> findById(@PathVariable Long id) {
         boardService.updateHits(id);
         BoardDto boardDto = boardService.findById(id);
@@ -45,12 +50,14 @@ public class BoardController {
     }
 
     @GetMapping("/update")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
     public ResponseEntity<BoardDto> updateForm(@PathVariable Long id) {
         BoardDto boardDto = boardService.findById(id);
         return ResponseEntity.ok(boardDto);
     }
 
     @GetMapping("/delete/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
     public ResponseEntity<String> delete(@PathVariable Long id) {
         boardService.delete(id);
         return ResponseEntity.ok("Deleted successfully");

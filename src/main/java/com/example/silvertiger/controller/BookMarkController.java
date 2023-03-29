@@ -26,7 +26,7 @@ public class BookMarkController {
     @PostMapping("/mark")
     @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
     public ResponseEntity <?> mark(@RequestBody BookMarkDto bookMarkDto, HttpServletRequest httpServletRequest) {
-        return ResponseEntity.ok(bookMarkService.mark(bookMarkDto,httpServletRequest));
+        return ResponseEntity.ok(bookMarkService.on(bookMarkDto,httpServletRequest));
     }
 
     @PostMapping("/test")

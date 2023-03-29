@@ -2,8 +2,11 @@ package com.example.silvertiger.controller;
 
 import com.example.silvertiger.dto.LoginDto;
 import com.example.silvertiger.dto.JoinDto;
+import com.example.silvertiger.dto.TokenDto;
+import com.example.silvertiger.entity.Account;
 import com.example.silvertiger.service.AccountService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,13 +24,14 @@ public class AccountController {
 
 // 회원가입 API
     @PostMapping("/join")
-    public String join(@Valid @RequestBody JoinDto joinDto) {
-        return accountService.join(joinDto);
+    public ResponseEntity <Account> join(@Valid @RequestBody JoinDto joinDto) {
+        return ResponseEntity.ok(accountService.join(joinDto));
+//                accountService.join(joinDto);
     }
 // 로그인 API
     @PostMapping("/login")
-    public String login(@RequestBody LoginDto loginDto){
-        return accountService.login(loginDto);
+    public ResponseEntity<TokenDto> login(@RequestBody LoginDto loginDto){
+        return ResponseEntity.ok(accountService.login(loginDto));
     }
 }
 
