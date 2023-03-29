@@ -1,5 +1,6 @@
 package com.example.silvertiger.service;
 
+import com.example.silvertiger.dto.TokenDto;
 import com.example.silvertiger.jwt.JwtTokenProvider;
 import com.example.silvertiger.entity.Account;
 import com.example.silvertiger.dto.LoginDto;
@@ -31,7 +32,7 @@ public class AccountService {
 //        return accountRepository.save(account);
 //    }
     @Transactional
-    public String join(JoinDto joinDto) {
+    public Account join(JoinDto joinDto) {
         Account account = Account.builder()
                 .id(joinDto.getId())
                 .passwd(passwordEncoder.encode(joinDto.getPasswd()))  //비밀번호 인코딩
@@ -44,19 +45,20 @@ public class AccountService {
                 .roles(Collections.singletonList("ROLE_USER"))         //roles는 최초 USER로 설정
                 .build();
 
-        return accountRepository.save(account).getId();
+        return accountRepository.save(account);
     }
 
     @Transactional
-    public String login(LoginDto loginDto) {
+    public TokenDto login(LoginDto loginDto) {
         Account account = accountRepository.findById(loginDto.getId()).orElseThrow(
                 () -> new IllegalArgumentException("가입되지 않은 ID 입니다.")
         );
         if (!passwordEncoder.matches(loginDto.getPassword(), account.getPassword())) {
             throw new IllegalArgumentException("잘못된 비밀번호 입니다");
         }
-        return jwtTokenProvider.createToken(account.getUsername(), account.getRoles());
+        TokenDto tokenDto = new TokenDto();
+        tokenDto.setToken(jwtTokenProvider.createToken(account.getUsername(), account.getRoles()));
+        return tokenDto;
     }
-
 }
 

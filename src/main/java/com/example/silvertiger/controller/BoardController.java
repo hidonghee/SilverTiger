@@ -27,12 +27,14 @@ public class BoardController {
     }
 
     @PostMapping("/update/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
     public ResponseEntity<BoardDto> update(@RequestBody BoardDto boardDto) {
         BoardDto updatedBoardDto = boardService.update(boardDto);
         return ResponseEntity.ok(updatedBoardDto);
     }
 
     @GetMapping("/")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
     public ResponseEntity<List<BoardDto>> findAll() {
         List<BoardDto> boardDtoList = boardService.findAll();
         return new ResponseEntity<>(boardDtoList, HttpStatus.OK);
@@ -40,6 +42,7 @@ public class BoardController {
 
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
     public ResponseEntity<BoardDto> findById(@PathVariable Long id) {
         boardService.updateHits(id);
         BoardDto boardDto = boardService.findById(id);
@@ -47,12 +50,14 @@ public class BoardController {
     }
 
     @GetMapping("/update")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
     public ResponseEntity<BoardDto> updateForm(@PathVariable Long id) {
         BoardDto boardDto = boardService.findById(id);
         return ResponseEntity.ok(boardDto);
     }
 
     @GetMapping("/delete/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
     public ResponseEntity<String> delete(@PathVariable Long id) {
         boardService.delete(id);
         return ResponseEntity.ok("Deleted successfully");
