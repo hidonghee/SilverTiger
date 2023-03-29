@@ -5,6 +5,7 @@ import com.example.silvertiger.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,7 @@ public class BoardController {
 
     private final BoardService boardService;
     @PostMapping("/save")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
     public ResponseEntity<BoardDto> save(@RequestBody BoardDto boardDto){
         BoardDto saveBoardDto = boardService.save(boardDto);
         return ResponseEntity.ok(saveBoardDto);
