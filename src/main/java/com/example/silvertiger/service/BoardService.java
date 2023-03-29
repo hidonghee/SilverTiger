@@ -17,9 +17,16 @@ import java.util.Optional;
 public class BoardService {
     private final BoardRepository boardRepository;
 
-    public void save(BoardDto boardDto){
+    public BoardDto save(BoardDto boardDto){
         BoardEntity boardEntity = BoardEntity.toSaveEntity(boardDto);
         boardRepository.save(boardEntity);
+
+        return findById(boardDto.getId());
+    }
+    public BoardDto update(BoardDto boardDto) {
+        BoardEntity boardEntity = BoardEntity.toUpdateEntity(boardDto);
+        boardRepository.save(boardEntity);
+        return findById(boardDto.getId());
     }
 
     public List<BoardDto> findAll() {
@@ -45,12 +52,6 @@ public class BoardService {
         } else {
             return null;
         }
-    }
-
-    public BoardDto update(BoardDto boardDto) {
-        BoardEntity boardEntity = BoardEntity.toUpdateEntity(boardDto);
-        boardRepository.save(boardEntity);
-        return findById(boardDto.getId());
     }
 
     public void delete(Long id) {

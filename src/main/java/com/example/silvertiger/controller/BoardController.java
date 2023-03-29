@@ -3,8 +3,9 @@ package com.example.silvertiger.controller;
 import com.example.silvertiger.dto.BoardDto;
 import com.example.silvertiger.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,52 +18,41 @@ import java.util.List;
 public class BoardController {
 
     private final BoardService boardService;
-
-    @GetMapping("/save")
-    public String saveForm() {
-        return "save";
+    @PostMapping("/save")
+    public ResponseEntity<BoardDto> save(@RequestBody BoardDto boardDto){
+        BoardDto saveBoardDto = boardService.save(boardDto);
+        return ResponseEntity.ok(saveBoardDto);
     }
 
-
-    @PostMapping("/save")
-    public String save(@ModelAttribute BoardDto boardDto){
-        System.out.println("boardDTO = " + boardDto);
-        boardService.save(boardDto);
-        return "index";
+    @PostMapping("/update/{id}")
+    public ResponseEntity<BoardDto> update(@RequestBody BoardDto boardDto) {
+        BoardDto updatedBoardDto = boardService.update(boardDto);
+        return ResponseEntity.ok(updatedBoardDto);
     }
 
     @GetMapping("/")
-    public String findAll(Model model) {
-        List<BoardDto> boardDTOList = boardService.findAll();
-        model.addAttribute("boardList", boardDTOList);
-        return "list";
+    public ResponseEntity<List<BoardDto>> findAll() {
+        List<BoardDto> boardDtoList = boardService.findAll();
+        return new ResponseEntity<>(boardDtoList, HttpStatus.OK);
     }
+
 
     @GetMapping("/{id}")
-    public String findById(@PathVariable Long id, Model model){
+    public ResponseEntity<BoardDto> findById(@PathVariable Long id) {
         boardService.updateHits(id);
         BoardDto boardDto = boardService.findById(id);
-        model.addAttribute("board", boardDto);
-        return "detail";
+        return ResponseEntity.ok(boardDto);
     }
 
-    @GetMapping("/update/{id}")
-    public String updateForm(@PathVariable Long id, Model model) {
+    @GetMapping("/update")
+    public ResponseEntity<BoardDto> updateForm(@PathVariable Long id) {
         BoardDto boardDto = boardService.findById(id);
-        model.addAttribute("boardUpdate", boardDto);
-        return "update";
-    }
-
-    @PostMapping("/update")
-    public String update(@ModelAttribute BoardDto boardDto, Model model) {
-        BoardDto board = boardService.update(boardDto);
-        model.addAttribute("board", board);
-        return "detail";
+        return ResponseEntity.ok(boardDto);
     }
 
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable Long id) {
+    public ResponseEntity<String> delete(@PathVariable Long id) {
         boardService.delete(id);
-        return "redirect:/board/";
+        return ResponseEntity.ok("Deleted successfully");
     }
 }
