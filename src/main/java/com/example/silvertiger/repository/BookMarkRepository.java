@@ -1,7 +1,9 @@
 package com.example.silvertiger.repository;
 
-import com.example.silvertiger.entity.AccountBookMark;
 
+
+import com.example.silvertiger.entity.Account;
+import com.example.silvertiger.entity.AccountBookMarkPk;
 import com.example.silvertiger.entity.BookMark;
 import lombok.Builder;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,6 +13,5 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface BookMarkRepository extends JpaRepository<BookMark,String> {
-
+public interface BookMarkRepository extends JpaRepository<BookMark, AccountBookMarkPk> {
 }

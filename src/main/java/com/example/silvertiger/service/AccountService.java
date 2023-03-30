@@ -17,6 +17,7 @@ import java.util.Collections;
 
 @RequiredArgsConstructor
 @Service
+
 public class AccountService {
 
     private final AccountRepository accountRepository;
@@ -36,12 +37,10 @@ public class AccountService {
         Account account = Account.builder()
                 .id(joinDto.getId())
                 .passwd(passwordEncoder.encode(joinDto.getPasswd()))  //비밀번호 인코딩
-                .address(joinDto.getAddress())
+                .email(joinDto.getEmail())
                 .name(joinDto.getName())
                 .tel(joinDto.getTel())
-                .city(joinDto.getCity())
                 .date(joinDto.getDate())
-                .gender(joinDto.getGender())
                 .roles(Collections.singletonList("ROLE_USER"))         //roles는 최초 USER로 설정
                 .build();
 

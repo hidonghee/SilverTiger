@@ -7,8 +7,10 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@Data
+@Getter
+@Setter
 public class AccountBookMarkPk implements Serializable {
-    private String accountId;
-    private String bookMarkId;
+    private Account account;
+    private String contextId;
+
 }

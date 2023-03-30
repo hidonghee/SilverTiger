@@ -1,10 +1,10 @@
 package com.example.silvertiger.service;
 
 import com.example.silvertiger.dto.BookMarkDto;
-import com.example.silvertiger.entity.AccountBookMark;
+import com.example.silvertiger.entity.Account;
+import com.example.silvertiger.entity.AccountBookMarkPk;
 import com.example.silvertiger.entity.BookMark;
 import com.example.silvertiger.jwt.JwtTokenProvider;
-import com.example.silvertiger.repository.AccountBookMarkRepository;
 import com.example.silvertiger.repository.AccountRepository;
 import com.example.silvertiger.repository.BookMarkRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+import java.util.Set;
 
 @RequiredArgsConstructor
 @Service
@@ -19,26 +20,41 @@ public class BookMarkService {
 
     private final AccountRepository accountRepository;
     private final BookMarkRepository bookMarkRepository;
-    private final AccountBookMarkRepository accountBookMarkRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
+
+    // 북마크 생성
     @Transactional
-    public AccountBookMark on(BookMarkDto bookMarkDTo , HttpServletRequest httpServletRequest){
+    public Account on(BookMarkDto bookMarkDTo , HttpServletRequest httpServletRequest) {
         String id = getUser(httpServletRequest);
-        bookMarkRepository.save(BookMark.builder().contentId(bookMarkDTo.getContext_id()).build());
-        return accountBookMarkRepository.save(AccountBookMark.builder().accountId(id).bookMarkId(bookMarkDTo.getContext_id()).build());
+        Account account = accountRepository.findById(id).get();
+
+        BookMark bookMark = BookMark.builder()
+                .contextId(bookMarkDTo.getContext_id())
+                .name(bookMarkDTo.getName())
+                .url(bookMarkDTo.getUrl())
+                .build();
+
+        account.addBookMark(bookMark);
+        accountRepository.save(account);
+        return account;
     }
-//     //북마크 지우기 추가하기
 //    @Transactional
-//    public AccountBookMark off(BookMarkDto bookMarkDto, HttpServletRequest httpServletRequest){
+//    public Set<Account> getOwnBookMarks(HttpServletRequest httpServletRequest) {
 //        String id = getUser(httpServletRequest);
-//        bookMarkRepository.delete();
+//        Account account = accountRepository.findById(id).get();
+//        //양방향으로 묶어놨던 user의 product
+//        return bookMarkRepository.findById(account,"666487");
 //    }
-
-
-
-
-
+     //북마크 지우기
+    @Transactional
+    public BookMarkDto off(BookMarkDto bookMarkDto, HttpServletRequest httpServletRequest){
+        String id = getUser(httpServletRequest);
+        Account account = accountRepository.findById(id).get();
+        AccountBookMarkPk accountBookMarkPk = new AccountBookMarkPk(account,bookMarkDto.getContext_id());
+        bookMarkRepository.deleteById(accountBookMarkPk);
+        return bookMarkDto;
+    }
 
     private String getUser(HttpServletRequest httpServletRequest) {
         String jwt = jwtTokenProvider.resolveToken(httpServletRequest);
