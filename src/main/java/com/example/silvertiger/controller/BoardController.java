@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RequiredArgsConstructor
 //경로가 반복될 경우 대표 주소를 작성해서 하위 매서드에서 반복적으로 작성하지 않아도 된다
 @RequestMapping("/board")
