@@ -20,7 +20,7 @@ public class BoardDto {
     private String boardPass;
     private String boardTitle;
     private String boardContents;
-    private Account user;
+    private Account account;
     private int boardHits;
     private LocalDateTime boardCreatedTime;
     private LocalDateTime boardUpdatedTime;
@@ -29,6 +29,7 @@ public class BoardDto {
     public static BoardDto toBoardDto(BoardEntity boardEntity){
         BoardDto boardDto = new BoardDto();
         boardDto.setId(boardEntity.getId());
+        boardDto.setAccount(boardEntity.getAccount());
         boardDto.setBoardWriter(boardEntity.getBoardWriter());
         boardDto.setBoardPass(boardEntity.getBoardPass());
         boardDto.setBoardTitle(boardEntity.getBoardTitle());
@@ -36,7 +37,6 @@ public class BoardDto {
         boardDto.setBoardHits(boardEntity.getBoardHits());
         boardDto.setBoardCreatedTime(boardEntity.getCreatedTime());
         boardDto.setBoardUpdatedTime(boardEntity.getUpdatedTime());
-
         return boardDto;
     }
 }

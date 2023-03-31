@@ -26,12 +26,13 @@ public class BoardController {
         return ResponseEntity.ok(saveBoardDto);
     }
 
-    @PostMapping("/update/{id}")
+/*    @PostMapping("/update/{id}")
     @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
     public ResponseEntity<BoardDto> update(@RequestBody BoardDto boardDto) {
-        BoardDto updatedBoardDto = boardService.update(boardDto);
+        BoardDto updatedBoardDto = boardService
+        .update(boardDto);
         return ResponseEntity.ok(updatedBoardDto);
-    }
+    }*/
 
     @GetMapping("/")
     @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
@@ -49,12 +50,12 @@ public class BoardController {
         return ResponseEntity.ok(boardDto);
     }
 
-    @GetMapping("/update")
+/*    @GetMapping("/update")
     @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
     public ResponseEntity<BoardDto> updateForm(@PathVariable Long id) {
         BoardDto boardDto = boardService.findById(id);
         return ResponseEntity.ok(boardDto);
-    }
+    }*/
 
     @GetMapping("/delete/{id}")
     @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")

@@ -17,8 +17,8 @@ public class BoardEntity extends BaseEntity {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private Account user;
+    @JoinColumn(name = "account_id", nullable = false)
+    private Account account;
 
     @Column(length = 20, nullable = false) // 크기 20, not null
     private String boardWriter;
@@ -36,8 +36,9 @@ public class BoardEntity extends BaseEntity {
     private int boardHits;
 
     //엔티티 객체를 옮겨 담기 위해 객체를 생성
-    public static BoardEntity toSaveEntity(BoardDto boardDto){
+    public static BoardEntity toSaveEntity(BoardDto boardDto, Account account){
         BoardEntity boardEntity = new BoardEntity();
+        boardEntity.setAccount(account);
         boardEntity.setBoardWriter(boardDto.getBoardWriter());
         boardEntity.setBoardPass(boardDto.getBoardPass());
         boardEntity.setBoardTitle(boardDto.getBoardTitle());
@@ -46,9 +47,11 @@ public class BoardEntity extends BaseEntity {
         return boardEntity;
     }
 
-    public static BoardEntity toUpdateEntity(BoardDto boardDto) {
+    public static BoardEntity toUpdateEntity(BoardDto boardDto, Account account) {
+
         BoardEntity boardEntity = new BoardEntity();
         boardEntity.setId(boardDto.getId());
+        boardEntity.setAccount(account);
         boardEntity.setBoardWriter(boardDto.getBoardWriter());
         boardEntity.setBoardPass(boardDto.getBoardPass());
         boardEntity.setBoardTitle(boardDto.getBoardTitle());
@@ -57,7 +60,4 @@ public class BoardEntity extends BaseEntity {
         return boardEntity;
     }
 
-    public void setMember(Account account) {
-        this.user = account;
-    }
 }
