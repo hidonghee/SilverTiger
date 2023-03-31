@@ -39,8 +39,6 @@ public class Account implements UserDetails, Serializable {
     @Column(nullable = false, length = 45)
     private String date;
 
-//    @OneToMany(mappedBy = "accountId")
-//    public List<AccountBookMark> bookMark = new ArrayList<>();
     @Builder.Default
     @OneToMany(mappedBy = "account",cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties({"account"})

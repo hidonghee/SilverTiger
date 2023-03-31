@@ -23,7 +23,6 @@ public class AccountController {
     @PostMapping("/join")
     public ResponseEntity <Account> join(@Valid @RequestBody JoinDto joinDto) {
         return ResponseEntity.ok(accountService.join(joinDto));
-//                accountService.join(joinDto);
     }
 // 로그인 API
     @PostMapping("/login")

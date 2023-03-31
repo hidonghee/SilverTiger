@@ -19,5 +19,4 @@ import java.util.List;
 public interface BookMarkRepository extends JpaRepository<BookMark, AccountBookMarkPk> {
     @Query(value = "select new com.example.silvertiger.dto.BookMarkDto(b.contextId,b.name,b.url) from BookMark b where b.account = :account ")
     List<BookMarkDto> findAllBookMarks(@Param("account")Account account);
-//    Optional<BookMark> findByAccountAndContextId(AccountBookMarkPk accountBookMarkPk);
 }

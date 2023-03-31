@@ -5,6 +5,7 @@ import com.example.silvertiger.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,6 +18,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
+import java.util.List;
 
 
 @RequiredArgsConstructor
@@ -39,34 +43,39 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                //h2 콘솔 사용
+                //csrf 적용 x
                 .csrf().disable().headers().frameOptions().disable()
+                .and()
+
+                // cors 설정 사용
+                .cors()
                 .and()
 
                 //세션 사용 안함
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
+
                 //URL 관리
                 .authorizeRequests()
-                .antMatchers("/account/join","/account/login","/account/test").permitAll()
+                .antMatchers(HttpMethod.OPTIONS,"/account/join","/account/login","/account/test").permitAll()
                 .anyRequest().authenticated()
                 .and();
-                // JwtAuthenticationFilter를 먼저 적용
-//                .formLogin().loginProcessingUrl("/login")
-//                .usernameParameter("emailAddress")
-//                .passwordParameter("password");
         // JwtAuthenticationFilter를 먼저 적용
         http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
-                //login 주소 호풀
+
     }
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.addAllowedOrigin("*");
+        configuration.addAllowedOriginPattern("*");
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
+        configuration.setAllowedMethods(Arrays.asList("GET","POST","PUT","PATCH","OPTIONS","DELETE"));
+        configuration.setExposedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
+        configuration.addExposedHeader("Authorization");
+
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

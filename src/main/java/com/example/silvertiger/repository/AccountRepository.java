@@ -10,11 +10,5 @@ import java.util.Optional;
 
 @Repository
 public interface AccountRepository extends JpaRepository<Account,String> {
-//    @EntityGraph(attributePaths = {"bookMarks"})
     Optional<Account> findById(String id);
-
-    Optional<Account> findBookMarksById(String Id);
-
-
-
 }

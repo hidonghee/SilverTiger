@@ -24,14 +24,6 @@ public class AccountService {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
 
-    //    public Account create (AccountRequest accountRequest){
-//        BCryptPasswordEncoder pw = new BCryptPasswordEncoder();
-//        String pwEcode=pw.encode(accountRequest.getPasswd());
-//        accountRequest.setPasswd(pwEcode);
-//        Account account = new Account();
-//        BeanUtils.copyProperties(accountRequest,account);
-//        return accountRepository.save(account);
-//    }
     @Transactional
     public Account join(JoinDto joinDto) {
         Account account = Account.builder()

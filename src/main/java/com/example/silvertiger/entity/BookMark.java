@@ -1,12 +1,9 @@
 package com.example.silvertiger.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+
 
 @Setter
 @Getter
@@ -40,7 +37,4 @@ public class BookMark implements Serializable {
         account.getBookMarks().add(this);
     }
 
-
-//    @OneToMany(mappedBy = "bookMarkId")
-//    public List<AccountBookMark> accountBookMark = new ArrayList<>();
 }
