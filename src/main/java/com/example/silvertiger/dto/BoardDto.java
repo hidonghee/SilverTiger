@@ -1,5 +1,6 @@
 package com.example.silvertiger.dto;
 
+import com.example.silvertiger.entity.Account;
 import com.example.silvertiger.entity.BoardEntity;
 import lombok.*;
 
@@ -19,6 +20,7 @@ public class BoardDto {
     private String boardPass;
     private String boardTitle;
     private String boardContents;
+    private Account user;
     private int boardHits;
     private LocalDateTime boardCreatedTime;
     private LocalDateTime boardUpdatedTime;

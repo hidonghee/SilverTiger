@@ -12,9 +12,13 @@ import javax.persistence.*;
 @Table(name = "board_table")
 
 public class BoardEntity extends BaseEntity {
-    @Id // pk 컬럼 지정. 필수
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private Account user;
 
     @Column(length = 20, nullable = false) // 크기 20, not null
     private String boardWriter;
@@ -51,5 +55,9 @@ public class BoardEntity extends BaseEntity {
         boardEntity.setBoardContents(boardDto.getBoardContents());
         boardEntity.setBoardHits(boardDto.getBoardHits());
         return boardEntity;
+    }
+
+    public void setMember(Account account) {
+        this.user = account;
     }
 }
