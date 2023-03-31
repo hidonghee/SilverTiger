@@ -30,11 +30,12 @@ public class BookMarkController {
     public ResponseEntity<?> unmark(@RequestBody BookMarkDto bookMarkDto, HttpServletRequest httpServletRequest){
         return ResponseEntity.ok(bookMarkService.off(bookMarkDto,httpServletRequest));
     }
-//    @PostMapping("/list")
-//    @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
-//    public ResponseEntity<?> listMark(@RequestBody BookMarkDto bookMarkDto, HttpServletRequest httpServletRequest){
-//        return ResponseEntity.ok(bookMarkService.getOwnBookMarks(httpServletRequest));
-//    }
+    @PostMapping("/list")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
+    public ResponseEntity<?> listMark (HttpServletRequest httpServletRequest){
+        return ResponseEntity.ok(bookMarkService.list(httpServletRequest));
+    }
+
     @PostMapping("/test")
     @Secured("ROLE_USER")
     public String test() {

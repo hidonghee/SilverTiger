@@ -42,7 +42,7 @@ public class Account implements UserDetails, Serializable {
 //    @OneToMany(mappedBy = "accountId")
 //    public List<AccountBookMark> bookMark = new ArrayList<>();
     @Builder.Default
-    @OneToMany(mappedBy = "account",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "account",cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties({"account"})
     private Set<BookMark> bookMarks = new LinkedHashSet<>();
 
@@ -50,6 +50,11 @@ public class Account implements UserDetails, Serializable {
         bookMarks.add(bookMark);
         bookMark.setAccount(this);
     }
+    public void removeBookMark(BookMark bookMark){
+        bookMark.removeAccount(this);
+        bookMarks.remove(bookMark);
+    }
+
 
 
     @ElementCollection(fetch = FetchType.EAGER) //roles 컬렉션

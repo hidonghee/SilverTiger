@@ -14,12 +14,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-
 @IdClass(AccountBookMarkPk.class)
 @Table(name = "bookmark")
 public class BookMark implements Serializable {
     @Id
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id", nullable = false)
     private Account account;
     @Id
@@ -34,6 +33,10 @@ public class BookMark implements Serializable {
 
     public void setAccount(Account account){
         this.account = account;
+        account.getBookMarks().add(this);
+    }
+    public void removeAccount(Account account){
+        this.account=null;
         account.getBookMarks().add(this);
     }
 

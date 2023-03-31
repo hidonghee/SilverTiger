@@ -12,7 +12,8 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
-import java.util.Set;
+import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -25,7 +26,7 @@ public class BookMarkService {
 
     // 북마크 생성
     @Transactional
-    public Account on(BookMarkDto bookMarkDTo , HttpServletRequest httpServletRequest) {
+    public BookMarkDto on(BookMarkDto bookMarkDTo , HttpServletRequest httpServletRequest) {
         String id = getUser(httpServletRequest);
         Account account = accountRepository.findById(id).get();
 
@@ -37,25 +38,31 @@ public class BookMarkService {
 
         account.addBookMark(bookMark);
         accountRepository.save(account);
-        return account;
+        return bookMarkDTo;
     }
-//    @Transactional
-//    public Set<Account> getOwnBookMarks(HttpServletRequest httpServletRequest) {
-//        String id = getUser(httpServletRequest);
-//        Account account = accountRepository.findById(id).get();
-//        //양방향으로 묶어놨던 user의 product
-//        return bookMarkRepository.findById(account,"666487");
-//    }
      //북마크 지우기
     @Transactional
     public BookMarkDto off(BookMarkDto bookMarkDto, HttpServletRequest httpServletRequest){
         String id = getUser(httpServletRequest);
         Account account = accountRepository.findById(id).get();
         AccountBookMarkPk accountBookMarkPk = new AccountBookMarkPk(account,bookMarkDto.getContext_id());
-        bookMarkRepository.deleteById(accountBookMarkPk);
+        BookMark bookMark = bookMarkRepository.findById(accountBookMarkPk).get();
+        account.removeBookMark(bookMark);
+        accountRepository.save(account);
         return bookMarkDto;
     }
 
+    // 북마크 조회(연관 테이블 join X)
+    @Transactional
+    public List<BookMarkDto> list(HttpServletRequest httpServletRequest){
+        String id = getUser(httpServletRequest);
+        Account account = accountRepository.findById(id).get();
+        List <BookMarkDto> bookMarkDtos = bookMarkRepository.findAllBookMarks(account);
+        return bookMarkDtos;
+    }
+
+
+    // Token으로 부터 id 추출.
     private String getUser(HttpServletRequest httpServletRequest) {
         String jwt = jwtTokenProvider.resolveToken(httpServletRequest);
         return jwtTokenProvider.getUserPk(jwt);
