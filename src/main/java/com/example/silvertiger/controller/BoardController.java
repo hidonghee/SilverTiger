@@ -9,10 +9,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
-@CrossOrigin(origins = "http://localhost:3000")
 @RequiredArgsConstructor
 //경로가 반복될 경우 대표 주소를 작성해서 하위 매서드에서 반복적으로 작성하지 않아도 된다
 @RequestMapping("/board")
@@ -21,8 +21,8 @@ public class BoardController {
     private final BoardService boardService;
     @PostMapping("/save")
     @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
-    public ResponseEntity<BoardDto> save(@RequestBody BoardDto boardDto){
-        BoardDto saveBoardDto = boardService.save(boardDto);
+    public ResponseEntity<BoardDto> save(@RequestBody BoardDto boardDto, HttpServletRequest httpServletRequest){
+        BoardDto saveBoardDto = boardService.save(httpServletRequest, boardDto);
         return ResponseEntity.ok(saveBoardDto);
     }
 

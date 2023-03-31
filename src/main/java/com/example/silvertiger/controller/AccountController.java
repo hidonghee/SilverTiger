@@ -14,7 +14,6 @@ import javax.validation.Valid;
 @RestController //즉 주용도는 JSON/XML형태로 객체 데이터 반환을 목적으로 합니다.
 @RequestMapping("/account")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
 public class AccountController {
 
     private final AccountService accountService;
