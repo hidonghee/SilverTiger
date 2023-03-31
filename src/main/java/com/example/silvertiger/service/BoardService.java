@@ -1,6 +1,7 @@
 package com.example.silvertiger.service;
 
 import com.example.silvertiger.dto.BoardDto;
+import com.example.silvertiger.entity.Account;
 import com.example.silvertiger.entity.BoardEntity;
 import com.example.silvertiger.jwt.JwtTokenProvider;
 import com.example.silvertiger.repository.AccountRepository;
@@ -27,17 +28,22 @@ public class BoardService {
         return jwtTokenProvider.getUserPk(jwt);
     }
 
-    public BoardDto save(HttpServletRequest httpServletRequest, BoardDto boardDto){
-        BoardEntity boardEntity = BoardEntity.toSaveEntity(boardDto);
-        boardEntity.setMember(accountRepository.findById(String.valueOf(Long.parseLong(getUser(httpServletRequest)))).orElse(null));
+
+    public BoardDto save(HttpServletRequest httpServletRequest, BoardDto boardDto) {
+        String id = getUser(httpServletRequest); // get username from JWT
+        Account account = accountRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user"));
+        boardDto.setAccount(account); // set account in DTO
+        BoardEntity boardEntity = BoardEntity.toSaveEntity(boardDto, account);
         boardRepository.save(boardEntity);
-        return findById(boardDto.getId());
+        return BoardDto.toBoardDto(boardEntity);
     }
-    public BoardDto update(BoardDto boardDto) {
+
+/*    public BoardDto update(BoardDto boardDto) {
         BoardEntity boardEntity = BoardEntity.toUpdateEntity(boardDto);
         boardRepository.save(boardEntity);
         return findById(boardDto.getId());
-    }
+    }*/
 
     public List<BoardDto> findAll() {
         List<BoardEntity> boardEntityList = boardRepository.findAll();
