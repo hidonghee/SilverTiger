@@ -25,6 +25,8 @@ public class BoardDto {
     private LocalDateTime boardCreatedTime;
     private LocalDateTime boardUpdatedTime;
 
+
+
     //엔티티 객체를 Dto에 옮겨 담는다.
     public static BoardDto toBoardDto(BoardEntity boardEntity){
         BoardDto boardDto = new BoardDto();

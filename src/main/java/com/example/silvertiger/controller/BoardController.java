@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
+@RestController
 @RequiredArgsConstructor
 //경로가 반복될 경우 대표 주소를 작성해서 하위 매서드에서 반복적으로 작성하지 않아도 된다
 @RequestMapping("/board")
@@ -26,13 +27,13 @@ public class BoardController {
         return ResponseEntity.ok(saveBoardDto);
     }
 
-/*    @PostMapping("/update/{id}")
+    @PutMapping("/update/{account_id}")
     @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
-    public ResponseEntity<BoardDto> update(@RequestBody BoardDto boardDto) {
-        BoardDto updatedBoardDto = boardService
-        .update(boardDto);
+    public ResponseEntity<BoardDto> update(@RequestBody BoardDto boardDto, HttpServletRequest httpServletRequest) {
+        BoardDto updatedBoardDto = boardService.update(httpServletRequest, boardDto);
         return ResponseEntity.ok(updatedBoardDto);
-    }*/
+    }
+
 
     @GetMapping("/")
     @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
@@ -57,6 +58,7 @@ public class BoardController {
         return ResponseEntity.ok(boardDto);
     }*/
 
+    //게시글 삭제
     @GetMapping("/delete/{id}")
     @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
     public ResponseEntity<String> delete(@PathVariable Long id) {

@@ -28,7 +28,8 @@ public class BoardService {
         return jwtTokenProvider.getUserPk(jwt);
     }
 
-
+    //게시판 저장
+    @Transactional
     public BoardDto save(HttpServletRequest httpServletRequest, BoardDto boardDto) {
         String id = getUser(httpServletRequest); // get username from JWT
         Account account = accountRepository.findById(id)
@@ -39,12 +40,21 @@ public class BoardService {
         return BoardDto.toBoardDto(boardEntity);
     }
 
-/*    public BoardDto update(BoardDto boardDto) {
-        BoardEntity boardEntity = BoardEntity.toUpdateEntity(boardDto);
-        boardRepository.save(boardEntity);
-        return findById(boardDto.getId());
-    }*/
 
+    @Transactional
+    public BoardDto update(HttpServletRequest httpServletRequest, BoardDto boardDto) {
+        String id = getUser(httpServletRequest); // get username from JWT
+        Account account = accountRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user"));
+        boardDto.setAccount(account); // set account in DTO
+        BoardEntity boardEntity = BoardEntity.toUpdateEntity(boardDto, account);
+        boardRepository.save(boardEntity);
+        return BoardDto.toBoardDto(boardEntity);
+    }
+
+
+    @Transactional
+    //게시판 전체 조회
     public List<BoardDto> findAll() {
         List<BoardEntity> boardEntityList = boardRepository.findAll();
         List<BoardDto> boardDtoList = new ArrayList<>();

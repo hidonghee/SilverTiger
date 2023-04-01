@@ -48,7 +48,6 @@ public class BoardEntity extends BaseEntity {
     }
 
     public static BoardEntity toUpdateEntity(BoardDto boardDto, Account account) {
-
         BoardEntity boardEntity = new BoardEntity();
         boardEntity.setId(boardDto.getId());
         boardEntity.setAccount(account);
