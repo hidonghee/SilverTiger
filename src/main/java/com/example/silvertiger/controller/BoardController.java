@@ -51,15 +51,8 @@ public class BoardController {
         return ResponseEntity.ok(boardDto);
     }
 
-/*    @GetMapping("/update")
-    @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
-    public ResponseEntity<BoardDto> updateForm(@PathVariable Long id) {
-        BoardDto boardDto = boardService.findById(id);
-        return ResponseEntity.ok(boardDto);
-    }*/
-
     //게시글 삭제
-    @GetMapping("/delete/{id}")
+    @DeleteMapping ("/delete/{id}")
     @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
     public ResponseEntity<String> delete(@PathVariable Long id) {
         boardService.delete(id);

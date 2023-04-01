@@ -79,7 +79,8 @@ public class BoardService {
             return null;
         }
     }
-
+    //게시글 삭제
+    @Transactional
     public void delete(Long id) {
         boardRepository.deleteById(id);
     }
