@@ -48,7 +48,7 @@ public class BoardController {
     @GetMapping("/mylist/{account_id}")
     @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
     public ResponseEntity<List<BoardDto>> myList(HttpServletRequest httpServletRequest) {
-        List<BoardDto> boardDtoList = boardService.list(httpServletRequest);
+        List<BoardDto> boardDtoList = boardService.mylist(httpServletRequest);
         return new ResponseEntity<>(boardDtoList, HttpStatus.OK);
     }
 

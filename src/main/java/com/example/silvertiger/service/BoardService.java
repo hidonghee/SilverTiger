@@ -69,7 +69,7 @@ public class BoardService {
     }
 
     @Transactional
-    public List<BoardDto> list(HttpServletRequest httpServletRequest){
+    public List<BoardDto> mylist(HttpServletRequest httpServletRequest){
         String id = getUser(httpServletRequest);
         Account account = accountRepository.findById(id).get();
         List <BoardDto> boardDto = boardRepository.findAccountBoardDto(account);
