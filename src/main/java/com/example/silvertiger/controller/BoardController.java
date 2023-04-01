@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -34,6 +36,14 @@ public class BoardController {
         return ResponseEntity.ok(updatedBoardDto);
     }
 
+    //게시글 삭제
+    @DeleteMapping ("/delete/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
+    public ResponseEntity<BoardDto> delete(@RequestBody BoardDto boardDto) {
+        HttpServletRequest httpServletRequest = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        BoardDto deleteBoardDto = boardService.delete(httpServletRequest, boardDto);
+        return ResponseEntity.ok(deleteBoardDto);
+    }
 
     @GetMapping("/")
     @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
@@ -43,7 +53,7 @@ public class BoardController {
     }
 
 
-    @GetMapping("/{id}")
+    @GetMapping("/{account_id}")
     @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
     public ResponseEntity<BoardDto> findById(@PathVariable Long id) {
         boardService.updateHits(id);
@@ -51,11 +61,4 @@ public class BoardController {
         return ResponseEntity.ok(boardDto);
     }
 
-    //게시글 삭제
-    @DeleteMapping ("/delete/{id}")
-    @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
-    public ResponseEntity<String> delete(@PathVariable Long id) {
-        boardService.delete(id);
-        return ResponseEntity.ok("Deleted successfully");
-    }
 }

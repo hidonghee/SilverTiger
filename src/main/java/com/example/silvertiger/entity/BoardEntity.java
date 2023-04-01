@@ -58,5 +58,4 @@ public class BoardEntity extends BaseEntity {
         boardEntity.setBoardHits(boardDto.getBoardHits());
         return boardEntity;
     }
-
 }

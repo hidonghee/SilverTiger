@@ -52,7 +52,16 @@ public class BoardService {
         return BoardDto.toBoardDto(boardEntity);
     }
 
-
+    //게시글 삭제
+    public BoardDto delete(HttpServletRequest httpServletRequest, BoardDto boardDto) {
+        String id = getUser(httpServletRequest); // get username from JWT
+        Account account = accountRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user"));
+        boardDto.setAccount(account); // set account in DTO
+        BoardEntity boardEntity = BoardEntity.toUpdateEntity(boardDto, account);
+        boardRepository.delete(boardEntity);
+        return BoardDto.toBoardDto(boardEntity);
+    }
     @Transactional
     //게시판 전체 조회
     public List<BoardDto> findAll() {
@@ -69,6 +78,7 @@ public class BoardService {
         boardRepository.updateHits(id);
     }
 
+    @Transactional
     public BoardDto findById(Long id) {
         Optional<BoardEntity> optionalBoardEntity = boardRepository.findById(id);
         if (optionalBoardEntity.isPresent()) {
@@ -79,9 +89,5 @@ public class BoardService {
             return null;
         }
     }
-    //게시글 삭제
-    @Transactional
-    public void delete(Long id) {
-        boardRepository.deleteById(id);
-    }
+
 }
