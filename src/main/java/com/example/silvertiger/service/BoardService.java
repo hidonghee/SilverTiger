@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,16 +61,20 @@ public class BoardService {
         boardRepository.delete(boardEntity);
         return BoardDto.toBoardDto(boardEntity);
     }
+
     @Transactional
     //게시판 전체 조회
     public List<BoardDto> findAll() {
+        return boardRepository.findAllBoardDto();
+    }
+/*    public List<BoardDto> findAll() {
         List<BoardEntity> boardEntityList = boardRepository.findAll();
         List<BoardDto> boardDtoList = new ArrayList<>();
         for (BoardEntity boardEntity: boardEntityList){
             boardDtoList.add(BoardDto.toBoardDto(boardEntity));
         }
         return boardDtoList;
-    }
+    }*/
 
     @Transactional
     public void updateHits(Long id){

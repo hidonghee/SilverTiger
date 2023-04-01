@@ -53,7 +53,7 @@ public class BoardController {
     }
 
 
-    @GetMapping("/{account_id}")
+    @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
     public ResponseEntity<BoardDto> findById(@PathVariable Long id) {
         boardService.updateHits(id);

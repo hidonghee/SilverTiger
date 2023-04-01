@@ -26,6 +26,16 @@ public class BoardDto {
     private LocalDateTime boardUpdatedTime;
 
 
+    public BoardDto(Long id, String boardWriter, String boardPass, String boardTitle, String boardContents, int boardHits, LocalDateTime boardCreatedTime, LocalDateTime boardUpdatedTime){
+        this.id = id;
+        this.boardWriter = boardWriter;
+        this.boardPass = boardPass;
+        this.boardTitle = boardTitle;
+        this.boardContents = boardContents;
+        this.boardHits = boardHits;
+        this.boardCreatedTime = boardCreatedTime;
+        this.boardUpdatedTime = boardUpdatedTime;
+    }
 
     //엔티티 객체를 Dto에 옮겨 담는다.
     public static BoardDto toBoardDto(BoardEntity boardEntity){
