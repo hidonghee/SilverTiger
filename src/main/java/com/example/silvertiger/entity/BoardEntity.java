@@ -15,7 +15,7 @@ public class BoardEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
     private Long id;
-
+    
     @ManyToOne
     @JoinColumn(name = "account_id", nullable = false)
     private Account account;
@@ -23,16 +23,16 @@ public class BoardEntity extends BaseEntity {
     @Column(length = 20, nullable = false) // 크기 20, not null
     private String boardWriter;
 
-    @Column // 크기 255, null 가능
+    @Column (nullable = false)
     private String boardPass;
 
-    @Column
+    @Column (nullable = false)
     private String boardTitle;
 
     @Column(length = 500)
     private String boardContents;
 
-    @Column
+    @Column (nullable = false)
     private int boardHits;
 
     //엔티티 객체를 옮겨 담기 위해 객체를 생성
