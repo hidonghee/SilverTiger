@@ -1,6 +1,7 @@
 package com.example.silvertiger.repository;
 
 import com.example.silvertiger.dto.BoardDto;
+import com.example.silvertiger.entity.Account;
 import com.example.silvertiger.entity.BoardEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -19,4 +20,7 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
 
     @Query("SELECT new com.example.silvertiger.dto.BoardDto(b.id,b.boardWriter,b.boardPass,b.boardTitle, b.boardContents, b.boardHits, b.createdTime, b.updatedTime) FROM BoardEntity b")
     List<BoardDto> findAllBoardDto();
+
+    @Query("SELECT new com.example.silvertiger.dto.BoardDto(b.id,b.boardWriter,b.boardPass,b.boardTitle, b.boardContents, b.boardHits, b.createdTime, b.updatedTime) FROM BoardEntity b where b.account = :account")
+    List<BoardDto> findAccountBoardDto(@Param("account") Account account);
 }

@@ -45,13 +45,19 @@ public class BoardController {
         return ResponseEntity.ok(deleteBoardDto);
     }
 
+    @GetMapping("/mylist/{account_id}")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
+    public ResponseEntity<List<BoardDto>> myList(HttpServletRequest httpServletRequest) {
+        List<BoardDto> boardDtoList = boardService.list(httpServletRequest);
+        return new ResponseEntity<>(boardDtoList, HttpStatus.OK);
+    }
+
     @GetMapping("/")
     @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
     public ResponseEntity<List<BoardDto>> findAll() {
         List<BoardDto> boardDtoList = boardService.findAll();
         return new ResponseEntity<>(boardDtoList, HttpStatus.OK);
     }
-
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")

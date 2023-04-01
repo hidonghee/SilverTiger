@@ -67,6 +67,14 @@ public class BoardService {
     public List<BoardDto> findAll() {
         return boardRepository.findAllBoardDto();
     }
+
+    @Transactional
+    public List<BoardDto> list(HttpServletRequest httpServletRequest){
+        String id = getUser(httpServletRequest);
+        Account account = accountRepository.findById(id).get();
+        List <BoardDto> boardDto = boardRepository.findAccountBoardDto(account);
+        return boardDto;
+    }
 /*    public List<BoardDto> findAll() {
         List<BoardEntity> boardEntityList = boardRepository.findAll();
         List<BoardDto> boardDtoList = new ArrayList<>();
@@ -93,4 +101,14 @@ public class BoardService {
         }
     }
 
+
+/*    public BoardDto myPage(HttpServletRequest httpServletRequest, BoardDto boardDto) {
+        String id = getUser(httpServletRequest); // get username from JWT
+        Account account = accountRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user"));
+        boardDto.setAccount(account); // set account in DTO
+        BoardEntity boardEntity = BoardEntity.toUpdateEntity(boardDto, account);
+        boardRepository.findAccountBoardDto(boardEntity);
+        return BoardDto.toBoardDto(boardEntity);
+    }*/
 }
