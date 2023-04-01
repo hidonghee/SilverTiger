@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@Table(name = "board_table")
+@Table(name = "board")
 
 public class BoardEntity extends BaseEntity {
     @Id
