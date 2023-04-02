@@ -45,7 +45,7 @@ public class BoardController {
         return ResponseEntity.ok(deleteBoardDto);
     }
 
-    @GetMapping("/mylist/{account_id}")
+    @GetMapping("/mylist")
     @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
     public ResponseEntity<List<BoardDto>> myList(HttpServletRequest httpServletRequest) {
         List<BoardDto> boardDtoList = boardService.mylist(httpServletRequest);
