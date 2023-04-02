@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 
 public class BoardDto {
     private Long id;
+    private String context_id;
     private String boardWriter;
     private String boardPass;
     private String boardTitle;
@@ -26,8 +27,9 @@ public class BoardDto {
     private LocalDateTime boardUpdatedTime;
 
 
-    public BoardDto(Long id, String boardWriter, String boardPass, String boardTitle, String boardContents, int boardHits, LocalDateTime boardCreatedTime, LocalDateTime boardUpdatedTime){
+    public BoardDto(Long id, String boardWriter, String boardPass, String boardTitle, String boardContents, int boardHits, LocalDateTime boardCreatedTime, LocalDateTime boardUpdatedTime, String contextId){
         this.id = id;
+        this.context_id = contextId;
         this.boardWriter = boardWriter;
         this.boardPass = boardPass;
         this.boardTitle = boardTitle;
@@ -42,6 +44,7 @@ public class BoardDto {
         BoardDto boardDto = new BoardDto();
         boardDto.setId(boardEntity.getId());
         boardDto.setAccount(boardEntity.getAccount());
+        boardDto.setContext_id(boardEntity.getContextId());
         boardDto.setBoardWriter(boardEntity.getBoardWriter());
         boardDto.setBoardPass(boardEntity.getBoardPass());
         boardDto.setBoardTitle(boardEntity.getBoardTitle());

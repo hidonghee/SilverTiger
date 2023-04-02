@@ -20,6 +20,9 @@ public class BoardEntity extends BaseEntity {
     @JoinColumn(name = "account_id", nullable = false)
     private Account account;
 
+    @Column(nullable = false,length = 50, name = "contextId")
+    private String contextId;
+
     @Column(length = 20, nullable = false) // 크기 20, not null
     private String boardWriter;
 
@@ -39,6 +42,7 @@ public class BoardEntity extends BaseEntity {
     public static BoardEntity toSaveEntity(BoardDto boardDto, Account account){
         BoardEntity boardEntity = new BoardEntity();
         boardEntity.setAccount(account);
+        boardEntity.setContextId(boardDto.getContext_id());
         boardEntity.setBoardWriter(boardDto.getBoardWriter());
         boardEntity.setBoardPass(boardDto.getBoardPass());
         boardEntity.setBoardTitle(boardDto.getBoardTitle());
@@ -51,6 +55,7 @@ public class BoardEntity extends BaseEntity {
         BoardEntity boardEntity = new BoardEntity();
         boardEntity.setId(boardDto.getId());
         boardEntity.setAccount(account);
+        boardEntity.setContextId(boardDto.getContext_id());
         boardEntity.setBoardWriter(boardDto.getBoardWriter());
         boardEntity.setBoardPass(boardDto.getBoardPass());
         boardEntity.setBoardTitle(boardDto.getBoardTitle());

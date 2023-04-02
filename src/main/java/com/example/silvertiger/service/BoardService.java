@@ -67,6 +67,14 @@ public class BoardService {
     public List<BoardDto> findAll() {
         return boardRepository.findAllBoardDto();
     }
+    /*    public List<BoardDto> findAll() {
+        List<BoardEntity> boardEntityList = boardRepository.findAll();
+        List<BoardDto> boardDtoList = new ArrayList<>();
+        for (BoardEntity boardEntity: boardEntityList){
+            boardDtoList.add(BoardDto.toBoardDto(boardEntity));
+        }
+        return boardDtoList;
+    }*/
 
     @Transactional
     public List<BoardDto> mylist(HttpServletRequest httpServletRequest){
@@ -75,13 +83,10 @@ public class BoardService {
         List <BoardDto> boardDto = boardRepository.findAccountBoardDto(account);
         return boardDto;
     }
-/*    public List<BoardDto> findAll() {
-        List<BoardEntity> boardEntityList = boardRepository.findAll();
-        List<BoardDto> boardDtoList = new ArrayList<>();
-        for (BoardEntity boardEntity: boardEntityList){
-            boardDtoList.add(BoardDto.toBoardDto(boardEntity));
-        }
-        return boardDtoList;
+
+/*    @Transactional
+    public List<BoardDto> context(){
+        return boardRepository.findContext();
     }*/
 
     @Transactional
