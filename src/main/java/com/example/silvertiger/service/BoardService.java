@@ -62,12 +62,12 @@ public class BoardService {
         return BoardDto.toBoardDto(boardEntity);
     }
 
-    @Transactional
     //게시판 전체 조회
+    @Transactional
     public List<BoardDto> findAll() {
         return boardRepository.findAllBoardDto();
     }
-    /*    public List<BoardDto> findAll() {
+ /*       public List<BoardDto> findAll() {
         List<BoardEntity> boardEntityList = boardRepository.findAll();
         List<BoardDto> boardDtoList = new ArrayList<>();
         for (BoardEntity boardEntity: boardEntityList){

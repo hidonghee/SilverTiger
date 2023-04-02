@@ -5,7 +5,6 @@ import com.example.silvertiger.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -58,6 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //URL 관리
                 .authorizeRequests()
                 .antMatchers("/account/join","/account/login","/account/test").permitAll()
+                .antMatchers("/board/").permitAll()
                 .anyRequest().authenticated()
                 .and();
         // JwtAuthenticationFilter를 먼저 적용
