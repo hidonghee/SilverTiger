@@ -29,7 +29,7 @@ public class BoardController {
         return ResponseEntity.ok(saveBoardDto);
     }
 
-    @PutMapping("/update/{account_id}")
+    @PutMapping("/update/{id}")
     @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
     public ResponseEntity<BoardDto> update(@RequestBody BoardDto boardDto, HttpServletRequest httpServletRequest) {
         BoardDto updatedBoardDto = boardService.update(httpServletRequest, boardDto);
