@@ -84,10 +84,10 @@ public class BoardService {
         return boardDto;
     }
 
-/*    @Transactional
-    public List<BoardDto> context(){
-        return boardRepository.findContext();
-    }*/
+    @Transactional
+    public List<BoardDto> findContext(String contextId){
+        return boardRepository.findContext(contextId);
+    }
 
     @Transactional
     public void updateHits(Long id){

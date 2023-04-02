@@ -53,12 +53,11 @@ public class BoardController {
     }
 
 
-/*    @GetMapping("/context/{context_id}")
-    @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
-    public ResponseEntity<List<BoardDto>> context(HttpServletRequest httpServletRequest) {
-        List<BoardDto> boardDtoList = boardService.context(httpServletRequest);
+    @GetMapping("/context/{context_id}")
+    public ResponseEntity<List<BoardDto>> findContext(@PathVariable String context_id) {
+        List<BoardDto> boardDtoList = boardService.findContext(context_id);
         return new ResponseEntity<>(boardDtoList, HttpStatus.OK);
-    }*/
+    }
 
     @GetMapping("/")
     public ResponseEntity<List<BoardDto>> findAll() {

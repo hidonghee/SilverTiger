@@ -25,5 +25,5 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
     List<BoardDto> findAccountBoardDto(@Param("account") Account account);
 
     @Query("SELECT new com.example.silvertiger.dto.BoardDto(b.id,b.boardWriter,b.boardPass,b.boardTitle, b.boardContents, b.boardHits, b.createdTime, b.updatedTime, b.contextId) FROM BoardEntity b where b.contextId = :context")
-    List<BoardDto> findContext(@Param("context") BoardEntity contextId);
+    List<BoardDto> findContext(@Param("context") String contextId);
 }
