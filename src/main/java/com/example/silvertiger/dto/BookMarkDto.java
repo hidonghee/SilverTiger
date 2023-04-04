@@ -8,12 +8,12 @@ import lombok.Setter;
 @Setter
 
 public class BookMarkDto {
-    private String contextId;
+    private String context_id;
     private String name;
     private String url;
 
-    public BookMarkDto(String contextId,String name,String url){
-        this.contextId=contextId;
+    public BookMarkDto(String context_id,String name,String url){
+        this.context_id=context_id;
         this.name=name;
         this.url=url;
     }

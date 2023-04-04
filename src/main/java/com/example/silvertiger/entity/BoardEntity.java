@@ -15,7 +15,7 @@ public class BoardEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
     private Long id;
-    
+
     @ManyToOne
     @JoinColumn(name = "account_id", nullable = false)
     private Account account;

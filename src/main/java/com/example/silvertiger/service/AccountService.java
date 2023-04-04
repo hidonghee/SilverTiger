@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.util.Collections;
 
@@ -51,25 +50,6 @@ public class AccountService {
         TokenDto tokenDto = new TokenDto();
         tokenDto.setToken(jwtTokenProvider.createToken(account.getUsername(), account.getRoles()));
         return tokenDto;
-    }
-    @Transactional
-    public JoinDto info(HttpServletRequest httpServletRequest){
-        String id = getUser(httpServletRequest);
-        Account account = accountRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid user"));
-        JoinDto info = JoinDto.builder()
-                .id(account.getId())
-                .passwd("Access Denied")
-                .name(account.getName())
-                .email(account.getEmail())
-                .tel(account.getTel())
-                .date(account.getDate())
-                .build();
-        return info;
-    }
-    private String getUser(HttpServletRequest httpServletRequest) {
-        String jwt = jwtTokenProvider.resolveToken(httpServletRequest);
-        return jwtTokenProvider.getUserPk(jwt);
     }
 }
 

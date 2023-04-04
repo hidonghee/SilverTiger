@@ -14,16 +14,12 @@ import java.io.Serializable;
 @IdClass(AccountBookMarkPk.class)
 @Table(name = "bookmark")
 public class BookMark implements Serializable {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
-//    private Long id;
-
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id", nullable = false)
     private Account account;
     @Id
-    @Column(nullable = false,length = 50, name = "contextId")
+    @Column(nullable = false,length = 50, name = "contentId")
     private String contextId;
 
     @Column(nullable = false, length = 30)

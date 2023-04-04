@@ -30,7 +30,7 @@ public class BookMarkService {
         Account account = accountRepository.findById(id).get();
 
         BookMark bookMark = BookMark.builder()
-                .contextId(bookMarkDTo.getContextId())
+                .contextId(bookMarkDTo.getContext_id())
                 .name(bookMarkDTo.getName())
                 .url(bookMarkDTo.getUrl())
                 .build();
@@ -39,12 +39,12 @@ public class BookMarkService {
         accountRepository.save(account);
         return bookMarkDTo;
     }
-     //북마크 지우기
+    //북마크 지우기
     @Transactional
     public BookMarkDto off(BookMarkDto bookMarkDto, HttpServletRequest httpServletRequest){
         String id = getUser(httpServletRequest);
         Account account = accountRepository.findById(id).get();
-        AccountBookMarkPk accountBookMarkPk = new AccountBookMarkPk(account,bookMarkDto.getContextId());
+        AccountBookMarkPk accountBookMarkPk = new AccountBookMarkPk(account,bookMarkDto.getContext_id());
         BookMark bookMark = bookMarkRepository.findById(accountBookMarkPk).get();
         account.removeBookMark(bookMark);
         accountRepository.save(account);
