@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RestController //즉 주용도는 JSON/XML형태로 객체 데이터 반환을 목적으로 합니다.
@@ -28,6 +29,10 @@ public class AccountController {
     @PostMapping("/login")
     public ResponseEntity<TokenDto> login(@RequestBody LoginDto loginDto){
         return ResponseEntity.ok(accountService.login(loginDto));
+    }
+    @GetMapping("/info")
+    public ResponseEntity<JoinDto> accountInfo(HttpServletRequest httpServletRequest){
+        return ResponseEntity.ok(accountService.info(httpServletRequest));
     }
 }
 

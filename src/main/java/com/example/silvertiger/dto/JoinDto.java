@@ -1,8 +1,10 @@
 package com.example.silvertiger.dto;
 
+import lombok.Builder;
 import lombok.Data;
 
 // Account 요청 객체
+@Builder
 @Data
 public class JoinDto {
 
