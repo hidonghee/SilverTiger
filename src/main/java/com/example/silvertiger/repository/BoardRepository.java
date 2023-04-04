@@ -18,12 +18,12 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
     @Query(value = "update BoardEntity b set b.boardHits=b.boardHits+1 where b.id=:id")
     void updateHits(@Param("id") Long id);
 
-    @Query("SELECT new com.example.silvertiger.dto.BoardDto(b.id,b.boardWriter,b.boardPass,b.boardTitle, b.boardContents, b.boardHits, b.createdTime, b.updatedTime, b.contextId) FROM BoardEntity b")
+    @Query("SELECT new com.example.silvertiger.dto.BoardDto(b.id,b.boardWriter,b.boardPass,b.boardTitle, b.boardContexts, b.boardHits, b.createdTime, b.updatedTime, b.contextId) FROM BoardEntity b")
     List<BoardDto> findAllBoardDto();
 
-    @Query("SELECT new com.example.silvertiger.dto.BoardDto(b.id,b.boardWriter,b.boardPass,b.boardTitle, b.boardContents, b.boardHits, b.createdTime, b.updatedTime, b.contextId) FROM BoardEntity b where b.account = :account")
+    @Query("SELECT new com.example.silvertiger.dto.BoardDto(b.id,b.boardWriter,b.boardPass,b.boardTitle, b.boardContexts, b.boardHits, b.createdTime, b.updatedTime, b.contextId) FROM BoardEntity b where b.account = :account")
     List<BoardDto> findAccountBoardDto(@Param("account") Account account);
 
-    @Query("SELECT new com.example.silvertiger.dto.BoardDto(b.id,b.boardWriter,b.boardPass,b.boardTitle, b.boardContents, b.boardHits, b.createdTime, b.updatedTime, b.contextId) FROM BoardEntity b where b.contextId = :context")
+    @Query("SELECT new com.example.silvertiger.dto.BoardDto(b.id,b.boardWriter,b.boardPass,b.boardTitle, b.boardContexts, b.boardHits, b.createdTime, b.updatedTime, b.contextId) FROM BoardEntity b where b.contextId = :context")
     List<BoardDto> findContext(@Param("context") String contextId);
 }

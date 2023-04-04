@@ -20,20 +20,20 @@ public class BoardDto {
     private String boardWriter;
     private String boardPass;
     private String boardTitle;
-    private String boardContents;
+    private String boardContexts;
     private Account account;
     private int boardHits;
     private LocalDateTime boardCreatedTime;
     private LocalDateTime boardUpdatedTime;
 
 
-    public BoardDto(Long id, String boardWriter, String boardPass, String boardTitle, String boardContents, int boardHits, LocalDateTime boardCreatedTime, LocalDateTime boardUpdatedTime, String contextId){
+    public BoardDto(Long id, String boardWriter, String boardPass, String boardTitle, String boardContexts, int boardHits, LocalDateTime boardCreatedTime, LocalDateTime boardUpdatedTime, String contextId){
         this.id = id;
         this.context_id = contextId;
         this.boardWriter = boardWriter;
         this.boardPass = boardPass;
         this.boardTitle = boardTitle;
-        this.boardContents = boardContents;
+        this.boardContexts = boardContexts;
         this.boardHits = boardHits;
         this.boardCreatedTime = boardCreatedTime;
         this.boardUpdatedTime = boardUpdatedTime;
@@ -48,7 +48,7 @@ public class BoardDto {
         boardDto.setBoardWriter(boardEntity.getBoardWriter());
         boardDto.setBoardPass(boardEntity.getBoardPass());
         boardDto.setBoardTitle(boardEntity.getBoardTitle());
-        boardDto.setBoardContents(boardEntity.getBoardContents());
+        boardDto.setBoardContexts(boardEntity.getBoardContexts());
         boardDto.setBoardHits(boardEntity.getBoardHits());
         boardDto.setBoardCreatedTime(boardEntity.getCreatedTime());
         boardDto.setBoardUpdatedTime(boardEntity.getUpdatedTime());

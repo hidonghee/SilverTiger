@@ -33,7 +33,7 @@ public class BoardEntity extends BaseEntity {
     private String boardTitle;
 
     @Column(length = 500)
-    private String boardContents;
+    private String boardContexts;
 
     @Column (nullable = false)
     private int boardHits;
@@ -46,7 +46,7 @@ public class BoardEntity extends BaseEntity {
         boardEntity.setBoardWriter(boardDto.getBoardWriter());
         boardEntity.setBoardPass(boardDto.getBoardPass());
         boardEntity.setBoardTitle(boardDto.getBoardTitle());
-        boardEntity.setBoardContents(boardDto.getBoardContents());
+        boardEntity.setBoardContexts(boardDto.getBoardContexts());
         boardEntity.setBoardHits(0);
         return boardEntity;
     }
@@ -59,7 +59,7 @@ public class BoardEntity extends BaseEntity {
         boardEntity.setBoardWriter(boardDto.getBoardWriter());
         boardEntity.setBoardPass(boardDto.getBoardPass());
         boardEntity.setBoardTitle(boardDto.getBoardTitle());
-        boardEntity.setBoardContents(boardDto.getBoardContents());
+        boardEntity.setBoardContexts(boardDto.getBoardContexts());
         boardEntity.setBoardHits(boardDto.getBoardHits());
         return boardEntity;
     }
