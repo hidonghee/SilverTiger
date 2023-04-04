@@ -57,6 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //URL 관리
                 .authorizeRequests()
                 .antMatchers("/account/join","/account/login","/account/test").permitAll()
+                .antMatchers("/board/", "/board/context/*").permitAll()
                 .anyRequest().authenticated()
                 .and();
         // JwtAuthenticationFilter를 먼저 적용

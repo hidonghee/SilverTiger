@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 
 public class BoardDto {
     private Long id;
+    private String context_id;
     private String boardWriter;
     private String boardPass;
     private String boardTitle;
@@ -25,11 +26,25 @@ public class BoardDto {
     private LocalDateTime boardCreatedTime;
     private LocalDateTime boardUpdatedTime;
 
+
+    public BoardDto(Long id, String boardWriter, String boardPass, String boardTitle, String boardContents, int boardHits, LocalDateTime boardCreatedTime, LocalDateTime boardUpdatedTime, String contextId){
+        this.id = id;
+        this.context_id = contextId;
+        this.boardWriter = boardWriter;
+        this.boardPass = boardPass;
+        this.boardTitle = boardTitle;
+        this.boardContents = boardContents;
+        this.boardHits = boardHits;
+        this.boardCreatedTime = boardCreatedTime;
+        this.boardUpdatedTime = boardUpdatedTime;
+    }
+
     //엔티티 객체를 Dto에 옮겨 담는다.
     public static BoardDto toBoardDto(BoardEntity boardEntity){
         BoardDto boardDto = new BoardDto();
         boardDto.setId(boardEntity.getId());
         boardDto.setAccount(boardEntity.getAccount());
+        boardDto.setContext_id(boardEntity.getContextId());
         boardDto.setBoardWriter(boardEntity.getBoardWriter());
         boardDto.setBoardPass(boardEntity.getBoardPass());
         boardDto.setBoardTitle(boardEntity.getBoardTitle());

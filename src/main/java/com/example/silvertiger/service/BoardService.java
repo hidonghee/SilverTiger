@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +27,8 @@ public class BoardService {
         return jwtTokenProvider.getUserPk(jwt);
     }
 
-
+    //게시판 저장
+    @Transactional
     public BoardDto save(HttpServletRequest httpServletRequest, BoardDto boardDto) {
         String id = getUser(httpServletRequest); // get username from JWT
         Account account = accountRepository.findById(id)
@@ -39,19 +39,54 @@ public class BoardService {
         return BoardDto.toBoardDto(boardEntity);
     }
 
-/*    public BoardDto update(BoardDto boardDto) {
-        BoardEntity boardEntity = BoardEntity.toUpdateEntity(boardDto);
-        boardRepository.save(boardEntity);
-        return findById(boardDto.getId());
-    }*/
 
+    @Transactional
+    public BoardDto update(HttpServletRequest httpServletRequest, BoardDto boardDto) {
+        String id = getUser(httpServletRequest); // get username from JWT
+        Account account = accountRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user"));
+        boardDto.setAccount(account); // set account in DTO
+        BoardEntity boardEntity = BoardEntity.toUpdateEntity(boardDto, account);
+        boardRepository.save(boardEntity);
+        return BoardDto.toBoardDto(boardEntity);
+    }
+
+    //게시글 삭제
+    public BoardDto delete(HttpServletRequest httpServletRequest, BoardDto boardDto) {
+        String id = getUser(httpServletRequest); // get username from JWT
+        Account account = accountRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user"));
+        boardDto.setAccount(account); // set account in DTO
+        BoardEntity boardEntity = BoardEntity.toUpdateEntity(boardDto, account);
+        boardRepository.delete(boardEntity);
+        return BoardDto.toBoardDto(boardEntity);
+    }
+
+    //게시판 전체 조회
+    @Transactional
     public List<BoardDto> findAll() {
+        return boardRepository.findAllBoardDto();
+    }
+ /*       public List<BoardDto> findAll() {
         List<BoardEntity> boardEntityList = boardRepository.findAll();
         List<BoardDto> boardDtoList = new ArrayList<>();
         for (BoardEntity boardEntity: boardEntityList){
             boardDtoList.add(BoardDto.toBoardDto(boardEntity));
         }
         return boardDtoList;
+    }*/
+
+    @Transactional
+    public List<BoardDto> mylist(HttpServletRequest httpServletRequest){
+        String id = getUser(httpServletRequest);
+        Account account = accountRepository.findById(id).get();
+        List <BoardDto> boardDto = boardRepository.findAccountBoardDto(account);
+        return boardDto;
+    }
+
+    @Transactional
+    public List<BoardDto> findContext(String contextId){
+        return boardRepository.findContext(contextId);
     }
 
     @Transactional
@@ -59,6 +94,7 @@ public class BoardService {
         boardRepository.updateHits(id);
     }
 
+    @Transactional
     public BoardDto findById(Long id) {
         Optional<BoardEntity> optionalBoardEntity = boardRepository.findById(id);
         if (optionalBoardEntity.isPresent()) {
@@ -70,7 +106,14 @@ public class BoardService {
         }
     }
 
-    public void delete(Long id) {
-        boardRepository.deleteById(id);
-    }
+
+/*    public BoardDto myPage(HttpServletRequest httpServletRequest, BoardDto boardDto) {
+        String id = getUser(httpServletRequest); // get username from JWT
+        Account account = accountRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user"));
+        boardDto.setAccount(account); // set account in DTO
+        BoardEntity boardEntity = BoardEntity.toUpdateEntity(boardDto, account);
+        boardRepository.findAccountBoardDto(boardEntity);
+        return BoardDto.toBoardDto(boardEntity);
+    }*/
 }

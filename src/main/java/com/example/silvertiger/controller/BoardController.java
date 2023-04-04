@@ -8,11 +8,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
+@RestController
 @RequiredArgsConstructor
 //경로가 반복될 경우 대표 주소를 작성해서 하위 매서드에서 반복적으로 작성하지 않아도 된다
 @RequestMapping("/board")
@@ -26,21 +29,41 @@ public class BoardController {
         return ResponseEntity.ok(saveBoardDto);
     }
 
-/*    @PostMapping("/update/{id}")
+    @PutMapping("/update/{id}")
     @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
-    public ResponseEntity<BoardDto> update(@RequestBody BoardDto boardDto) {
-        BoardDto updatedBoardDto = boardService
-        .update(boardDto);
+    public ResponseEntity<BoardDto> update(@RequestBody BoardDto boardDto, HttpServletRequest httpServletRequest) {
+        BoardDto updatedBoardDto = boardService.update(httpServletRequest, boardDto);
         return ResponseEntity.ok(updatedBoardDto);
-    }*/
+    }
+
+    //게시글 삭제
+    @DeleteMapping ("/delete/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
+    public ResponseEntity<BoardDto> delete(@RequestBody BoardDto boardDto) {
+        HttpServletRequest httpServletRequest = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        BoardDto deleteBoardDto = boardService.delete(httpServletRequest, boardDto);
+        return ResponseEntity.ok(deleteBoardDto);
+    }
+
+    @GetMapping("/mylist")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
+    public ResponseEntity<List<BoardDto>> myList(HttpServletRequest httpServletRequest) {
+        List<BoardDto> boardDtoList = boardService.mylist(httpServletRequest);
+        return new ResponseEntity<>(boardDtoList, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/context/{context_id}")
+    public ResponseEntity<List<BoardDto>> findContext(@PathVariable String context_id) {
+        List<BoardDto> boardDtoList = boardService.findContext(context_id);
+        return new ResponseEntity<>(boardDtoList, HttpStatus.OK);
+    }
 
     @GetMapping("/")
-    @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
     public ResponseEntity<List<BoardDto>> findAll() {
         List<BoardDto> boardDtoList = boardService.findAll();
         return new ResponseEntity<>(boardDtoList, HttpStatus.OK);
     }
-
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
@@ -50,17 +73,4 @@ public class BoardController {
         return ResponseEntity.ok(boardDto);
     }
 
-/*    @GetMapping("/update")
-    @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
-    public ResponseEntity<BoardDto> updateForm(@PathVariable Long id) {
-        BoardDto boardDto = boardService.findById(id);
-        return ResponseEntity.ok(boardDto);
-    }*/
-
-    @GetMapping("/delete/{id}")
-    @PreAuthorize("hasAnyRole('ROLE_USER','ADMIN')")
-    public ResponseEntity<String> delete(@PathVariable Long id) {
-        boardService.delete(id);
-        return ResponseEntity.ok("Deleted successfully");
-    }
 }
