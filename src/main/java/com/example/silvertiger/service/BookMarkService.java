@@ -44,7 +44,7 @@ public class BookMarkService {
     public BookMarkDto off(BookMarkDto bookMarkDto, HttpServletRequest httpServletRequest){
         String id = getUser(httpServletRequest);
         Account account = accountRepository.findById(id).get();
-        AccountBookMarkPk accountBookMarkPk = new AccountBookMarkPk(account.getId(),bookMarkDto.getContextId());
+        AccountBookMarkPk accountBookMarkPk = new AccountBookMarkPk(account,bookMarkDto.getContextId());
         BookMark bookMark = bookMarkRepository.findById(accountBookMarkPk).get();
         account.removeBookMark(bookMark);
         accountRepository.save(account);
