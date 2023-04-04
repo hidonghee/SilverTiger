@@ -10,7 +10,7 @@ import java.util.Objects;
 @Getter
 @Setter
 public class AccountBookMarkPk implements Serializable {
-    private String account;
+    private Account account;
     private String contextId;
 
     //    private Long id;
