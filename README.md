@@ -19,5 +19,5 @@ https://github.com/imyujinsim/project-st-fe
    - 글 삭제
    - 글 작성시간
    - 글 수정시간
-   - 글 조회수
+   - 글 조회수(수정)
 4. JWT
