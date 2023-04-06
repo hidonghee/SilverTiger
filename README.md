@@ -20,3 +20,10 @@ https://github.com/imyujinsim/project-st-fe
    - 글 작성시간
    - 글 수정시간
    - 글 조회수(수정)
+ 4. 북마크
+ 
+   
+### 🙌 담당 역할 🙌 
+#### - JWT 구현을 통해 REST API 접근권한 제어, Security 설정 관리
+#### - JPA를 통해 회원가입 및 북마크 테이블 구성, 관리
+#### - front_end 입력값 검증
