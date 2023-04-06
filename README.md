@@ -25,7 +25,7 @@ https://github.com/imyujinsim/project-st-fe
  ## 웹 서비스 시연영상
  https://youtu.be/9GR9_RNei2k
  
-   
+ ---
 ### 🙌 담당 역할 🙌 
 #### - JWT 구현을 통해 REST API 접근권한 제어, Security 설정 관리
 #### - JPA를 통해 회원가입 및 북마크 테이블 구성, 관리
